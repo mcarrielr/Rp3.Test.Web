@@ -1,0 +1,49 @@
+﻿@model List<Rp3.Test.Mvc.Models.BalanceViewModel>
+@{
+    ViewBag.Title = "Balance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <h1>Balance</h1>
+    <p class="lead">Resumen por Balance</p>
+</div>
+
+
+<div class="row">
+    <table style="width:100%" id="grid">
+        <thead>
+            <tr>
+                <th data-field="Categoria">Categoria</th>
+                <th data-field="Saldo">Saldo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Categoria
+                    </td>
+                    <td>
+                        @string.Format("{0:c2}", item.Saldo)
+                    </td>
+               </tr>
+            }
+        </tbody>
+    </table>
+    @section Scripts{
+        <script src="/Scripts/kendo.all.min.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+          $("#grid").kendoGrid({
+
+              resizable: true,
+              reorderable: true,
+              filterable: true,
+              scrollable: false,
+      
+          });
+        </script>
+    }
+</div>

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Rp3.Test.Mvc.Models.CategoryViewModel>
+@{
+    ViewBag.Title = "Categorías";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <h1>Categorías</h1>
+    <a class="btn btn-default" href="@Url.Action("Create","Category")">Nuevo</a>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <table  id="grid">
+            <thead>
+                <tr>
+                    <th data-field="Acciones"  ></th>
+                    <th  data-field="Código">Código</th>
+                    <th  data-field="Categoría">Categoría</th>
+                    <th  data-field="Activo">Activo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model)
+                {
+                <tr>
+                    <td><a class="btn btn-default" href="@Url.Action("Edit", new { categoryId = category.CategoryId })"><img alt="" src="/Images/ico-edit.png" /></a></td>
+                    <td>@category.CategoryId</td>
+                    <td>@category.Name</td>
+                    <td class="text-center">@Html.CheckBox("category-active-check", category.Active, htmlAttributes: new { disabled = "disabled" })</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script src="/Scripts/kendo.all.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+          $("#grid").kendoGrid({
+              sortable: true,
+              groupable: true,
+              resizable: true,
+              reorderable: true,
+              filterable: true,
+              scrollable: false,
+              pageSize: 5,
+              pageable: {
+                  refresh: true,
+                  pageSizes: true,
+                  pageSize: 5
+              }
+          });
+    </script>
+}

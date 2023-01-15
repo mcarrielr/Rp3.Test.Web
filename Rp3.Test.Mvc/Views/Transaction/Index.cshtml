@@ -1,0 +1,78 @@
+﻿@model List<Rp3.Test.Mvc.Models.TransactionViewModel>
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <h1>Mis Transacciones</h1>
+    <p class="lead">Registro de Ingresos y Gastos</p>    
+    <a class="btn btn-default" href="@Url.Action("Create","Transaction")">Nuevo</a>
+</div>
+
+<div class="row">
+    <table style="width:100%" id="grid">
+        <thead>
+            <tr>
+                <th data-field="Acciones"></th>
+                <th data-field="ID">ID</th>
+                <th data-field="Fecha">Fecha</th>
+                <th data-field="Categoría">Categoría</th>
+                <th data-field="Tipo">Tipo</th>
+                <th data-field="Descripción">Descripción</th>
+                <th data-field="Valor">Valor</th>
+                <th data-field="Notas">Notas</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><a href="/Transaction/Edit/@item.TransactionId"><img alt="" src="/Images/ico-edit.png" /></a></td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TransactionId)
+                    </td>
+                    <td>
+                        @string.Format("{0:dd/MMM/yyyy}", item.RegisterDate)
+                    </td>
+                    <td>
+                        @item.CategoryName
+                    </td>
+                    <td>
+                        @item.TransactionType
+                    </td>
+                    <td>
+                        @item.ShortDescription
+                    </td>
+                    <td>
+                        @string.Format("{0:c2}", item.Amount)
+                    </td>
+                    <td>
+                        @item.Notes
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @section Scripts{
+        <script src="/Scripts/kendo.all.min.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+          $("#grid").kendoGrid({
+              sortable: true,
+              groupable: true,
+              resizable: true,
+              reorderable: true,
+              filterable: true,
+              scrollable: false,
+              pageSize: 5,
+              pageable: {
+                  refresh: true,
+                  pageSizes: true,
+                  pageSize: 5
+              }
+          });
+        </script>
+    }
+</div>

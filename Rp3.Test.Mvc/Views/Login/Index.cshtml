@@ -1,0 +1,43 @@
+﻿@model Rp3.Test.Mvc.Models.Usuario
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutPageLogin.cshtml";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+</hgroup>
+
+<section id="loginForm">
+    @using (Html.BeginForm("Index"))
+    {
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Login</legend>
+            <ol>
+                <li>
+                    @Html.LabelFor(model => model.usuario)
+                    @Html.TextBoxFor(model => model.usuario)
+                    @Html.ValidationMessageFor(model => model.usuario)
+                </li>
+                <li>
+                    @Html.LabelFor(model => model.clave)
+                    @Html.PasswordFor(model => model.clave)
+                    @Html.ValidationMessageFor(model => model.clave)
+                </li>
+            </ol>
+            <input type="submit" value="Login" id="btnlogin" />
+        </fieldset>
+    }
+</section>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="/Scripts/kendo.all.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $("#btnlogin").kendoButton();
+    </script>
+}

@@ -1,0 +1,80 @@
+﻿@model Rp3.Test.Common.Models.Transaction
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Modificar Transaction</h2>
+
+@using (Html.BeginForm("Create"))
+{
+
+<div class="form-horizontal">
+    <h4>Transaction</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CategoryId, new SelectList((System.Collections.IEnumerable)ViewData["CategorySelectList"], "CategoryId", "Name"), "Selecione una CategoryId", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TransactionTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.TransactionTypeId, new SelectList((System.Collections.IEnumerable)ViewData["TransactionTypeSelectList"], "TransactionTypeId", "Name"), "Selecione una TransactionType", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TransactionTypeId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.RegisterDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.RegisterDate, "{0:dd/MM/yyyy}",  new { htmlAttributes = new { id = "fecha", @type = "text", min=DateTime.Now.AddDays(-30).ToShortDateString(), max = DateTime.Now.ToShortDateString() } })
+            @Html.ValidationMessageFor(model => model.RegisterDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ShortDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control",@type="number" } })
+            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Guardar" id="btnGuardar" class="btn btn-default" onclick="return(confirm('Esta Seguro de Guardar el Registro'));" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Listado de Transaction", "Index")
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="/Scripts/kendo.all.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $("#fecha").kendoDatePicker({
+            format: "MM/dd/yyyy"
+        });
+        $("#btnGuardar").kendoButton();
+    </script>
+}
